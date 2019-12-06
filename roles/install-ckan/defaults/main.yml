@@ -13,5 +13,6 @@ apt_requirements:
   - openjdk-8-jdk
   - redis-server
   - python-psycopg2
+  - sudo
 
 virtual_env: /usr/lib/ckan/default
