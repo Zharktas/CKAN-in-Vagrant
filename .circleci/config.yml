@@ -24,3 +24,6 @@ jobs:
       - checkout:
           path: ckan/CKAN-in-Vagrant
 
+      - run:
+          name: Run ansible
+          command: ansible-playbook -v ckan/CKAN-in-Vagrant/playbook.yml
