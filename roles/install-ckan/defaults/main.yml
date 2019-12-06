@@ -1,2 +1,16 @@
 ---
 # defaults file for install-ckan
+
+apt_requirements:
+  - python-apt
+  - python-dev
+  - postgresql
+  - libpq-dev
+  - python-pip
+  - python-virtualenv
+  - git-core
+  - solr-jetty
+  - openjdk-8-jdk
+  - redis-server
+
+virtual_env: /usr/lib/ckan/default

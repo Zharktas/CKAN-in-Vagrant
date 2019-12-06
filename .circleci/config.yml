@@ -26,4 +26,4 @@ jobs:
 
       - run:
           name: Run ansible
-          command: ansible-playbook -v ckan/CKAN-in-Vagrant/playbook.yml
+          command: ansible-playbook -v -i inventories/vagrant ckan/CKAN-in-Vagrant/playbook.yml

@@ -1,2 +1,26 @@
 ---
 # tasks file for install-ckan
+
+- name: Install apt requirements
+  apt:
+    pkg:
+      "{{ apt_requirements }}"
+  become: yes
+
+- name: Install local ckan to virtual environment
+  pip:
+    name: /vagrant
+    virtualenv: "{{ virtual_env }}"
+  become: yes
+
+- name: Install ckan requirements
+  pip:
+    requirements: "/vagrant/requirements.txt"
+    virtualenv: "{{ virtual_env }}"
+  become: yes
+
+- name: Install ckan dev requirements
+  pip:
+    requirements: "/vagrant/dev-requirements.txt"
+    virtualenv: "{{ virtual_env }}"
+  become: yes
