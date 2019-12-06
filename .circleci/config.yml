@@ -6,9 +6,13 @@ jobs:
 
     steps:
       - run:
+          name: Install required packages
+          command: apt-get update && apt-get -y install git
+          
+      - run:
           name: Checkout ckan
           command: git clone https://github.com/ckan/ckan.git ckan
 
       - checkout:
           path: ckan/CKAN-in-Vagrant
-         
+
