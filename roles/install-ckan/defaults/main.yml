@@ -14,5 +14,6 @@ apt_requirements:
   - redis-server
   - python-psycopg2
   - sudo
+  - systemd
 
 virtual_env: /usr/lib/ckan/default
