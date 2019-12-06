@@ -16,7 +16,7 @@
 
 - name: Install ckan requirements
   pip:
-    requirements: "{{ ckan_source_path }}/requirements.txt"
+    requirements: "{{ ckan_source_path }}/requirements-py2.txt"
     virtualenv: "{{ virtual_env }}"
   become: yes
 
