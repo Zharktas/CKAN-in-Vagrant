@@ -1,0 +1,1 @@
+# CKAN-in-Vagrant
