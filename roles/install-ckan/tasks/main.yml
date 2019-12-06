@@ -50,3 +50,19 @@
 
 - name: Create config file
   shell: "{{ virtual_env }}/bin/paster make-config ckan {{ ckan_source_path }}/CKAN-in-Vagrant/development.ini"
+  args:
+    creates: "{{ ckan_source_path }}/CKAN-in-Vagrant/development.ini"
+
+- name: Create config directory
+  file:
+    dest: /etc/ckan/default
+    state: directory
+  become: yes
+
+- name: Symlink config file to etc
+  file:
+    dest: /etc/ckan/default/development.ini
+    src: "{{ ckan_source_path }}/CKAN-in-Vagrant/development.ini"
+    state: link
+    force: yes
+  become: yes
