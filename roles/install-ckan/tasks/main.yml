@@ -6,6 +6,7 @@
     pkg:
       "{{ apt_requirements }}"
   become: yes
+  notify: Start Postgresql
 
 - name: Install local ckan to virtual environment
   pip:
@@ -24,6 +25,8 @@
     requirements: "{{ ckan_source_path }}/dev-requirements.txt"
     virtualenv: "{{ virtual_env }}"
   become: yes
+
+- meta: flush_handlers
 
 - name: Create databases
   postgresql_db:

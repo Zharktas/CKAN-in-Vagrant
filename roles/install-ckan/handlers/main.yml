@@ -1,2 +1,7 @@
 ---
 # handlers file for install-ckan
+
+- name: Start Postgresql
+  service:
+    name: postgresql
+    state: started
