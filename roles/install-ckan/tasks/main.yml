@@ -104,6 +104,11 @@
   become: yes
   notify: Restart Jetty
 
+- name: Reload systemd
+  systemd:
+    daemon-reload: true
+  become: yes
+
 - name: Copy solr-jetty.xml
   copy:
     src: "solr-jetty.xml"
