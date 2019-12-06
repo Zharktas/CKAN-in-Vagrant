@@ -1,2 +1,5 @@
-[localhost]
+[vagrant]
 127.0.0.1  ansible_connection=local
+
+[vagrant:vars]
+ckan_source_path=/vagrant

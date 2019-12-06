@@ -10,5 +10,7 @@ Vagrant.configure("2") do |config|
 
   config.vm.provision "ansible_local" do |ansible|
     ansible.playbook = "/vagrant/CKAN-in-Vagrant/playbook.yml"
+    ansible.inventory_path = "/vagrant/CKAN-in-Vagrant/inventories/vagrant"
+    ansible.limit = "all"
   end
 end
