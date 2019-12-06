@@ -20,7 +20,7 @@ VERBOSE=yes
 #JETTY_SHUTDOWN=30
 
 # Additional arguments to pass to Jetty
-#JETTY_ARGS=
+JETTY_ARGS="jetty.http.port=8983"
 
 # Jetty uses a directory to store temporary files like unpacked webapps
 #JETTY_TMP=/var/cache/jetty9

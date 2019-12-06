@@ -12,6 +12,7 @@
   pip:
     name: "{{ ckan_source_path }}"
     virtualenv: "{{ virtual_env }}"
+    editable: yes
   become: yes
 
 - name: Install ckan requirements
@@ -83,7 +84,7 @@
 
 - name: Symlink schema.xml
   file:
-    dest: /etc/solr/conf.xml
+    dest: /etc/solr/schema.xml
     src: "{{ ckan_source_path }}/ckan/config/solr/schema.xml"
     state: link
     force: yes
@@ -103,10 +104,6 @@
   become: yes
   notify: Restart Jetty
 
-- name: Reload systemd
-  shell: systemctl daemon-reload
-  become: yes
-
 - name: Copy solr-jetty.xml
   copy:
     src: "solr-jetty.xml"
@@ -114,18 +111,15 @@
   become: yes
   notify: Restart Jetty
 
-- name: Change jetty port
-  ini_file:
-    path: /etc/jetty9/start.d/http.ini
-    option: jetty.port
-    value: "8983"
-    section: null
-  become: yes
-  notify: Restart Jetty
 
+# In windows file system who.ini does not link to config
 - name: Symlink who.ini
   file:
     dest: /etc/ckan/default/who.ini
-    src: "{{ ckan_source_path }}/who.ini"
+    src: "{{ ckan_source_path }}/ckan/config/who.ini"
     state: link
+  become: yes
+
+- name: Create database tables
+  shell: "{{ virtual_env }}/bin/paster --plugin=ckan db init -c /etc/ckan/default/development.ini"
   become: yes

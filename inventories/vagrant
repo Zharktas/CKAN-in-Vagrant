@@ -3,4 +3,4 @@
 
 [vagrant:vars]
 ckan_source_path = /vagrant
-ckan_site_url = 192.168.33.10
+ckan_site_url = http://192.168.33.10
