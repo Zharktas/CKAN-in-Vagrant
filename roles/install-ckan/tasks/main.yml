@@ -24,3 +24,24 @@
     requirements: "{{ ckan_source_path }}/dev-requirements.txt"
     virtualenv: "{{ virtual_env }}"
   become: yes
+
+- name: Create databases
+  postgresql_db:
+    name: "{{ item }}"
+  with_items:
+    - ckan_default
+    - ckan_test
+  become: yes
+  become_user: postgres
+
+- name: Create Postgres users
+  postgresql_user:
+    db: "{{ item }}"
+    user: "{{ item }}"
+    password: pass
+  with_items:
+    - ckan_default
+    - ckan_test
+  become: yes
+  become_user: postgres
+

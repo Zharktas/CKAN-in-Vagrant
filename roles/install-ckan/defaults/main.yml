@@ -12,5 +12,6 @@ apt_requirements:
   - solr-jetty
   - openjdk-8-jdk
   - redis-server
+  - python-psycopg2
 
 virtual_env: /usr/lib/ckan/default
