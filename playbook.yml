@@ -1,0 +1,8 @@
+---
+
+- hosts: all
+    #pre_tasks:
+    #  - import_role:
+    #      name: mailhog
+  roles:
+    - role: install-ckan
