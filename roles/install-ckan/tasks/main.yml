@@ -48,3 +48,5 @@
   become: yes
   become_user: postgres
 
+- name: Create config file
+  shell: "{{ virtual_env }}/bin/paster make-config ckan {{ ckan_source_path }}/CKAN-in-Vagrant/development.ini"
