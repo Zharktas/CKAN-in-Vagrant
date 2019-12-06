@@ -5,3 +5,9 @@
   service:
     name: postgresql
     state: started
+
+- name: Restart Jetty
+  service:
+    name: jetty9
+    state: restarted
+  become: yes

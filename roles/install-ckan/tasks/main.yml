@@ -66,3 +66,66 @@
     state: link
     force: yes
   become: yes
+
+- name: Add site_url to development.ini
+  ini_file:
+    path: "{{ ckan_source_path }}/CKAN-in-Vagrant/development.ini"
+    section: app:main
+    option: ckan.site_url
+    value: "{{ ckan_site_url }}"
+
+- name: Copy jetty configuration
+  copy:
+    src: "jetty9"
+    dest: /etc/default/jetty9
+  become: yes
+  notify: Restart Jetty
+
+- name: Symlink schema.xml
+  file:
+    dest: /etc/solr/conf.xml
+    src: "{{ ckan_source_path }}/ckan/config/solr/schema.xml"
+    state: link
+    force: yes
+  become: yes
+  notify: Restart Jetty
+
+- name: Create systemd directory for jetty
+  file:
+    dest: /etc/systemd/system/jetty9.service.d
+    state: directory
+  become: yes
+
+- name: Copy solr.conf
+  copy:
+    src: "solr.conf"
+    dest: /etc/systemd/system/jetty9.service.d/solr.conf
+  become: yes
+  notify: Restart Jetty
+
+- name: Reload systemd
+  shell: systemctl daemon-reload
+  become: yes
+
+- name: Copy solr-jetty.xml
+  copy:
+    src: "solr-jetty.xml"
+    dest: /etc/solr/solr-jetty.xml
+  become: yes
+  notify: Restart Jetty
+
+- name: Change jetty port
+  ini_file:
+    path: /etc/jetty9/start.d/http.ini
+    option: jetty.port
+    value: "8983"
+    section: null
+  become: yes
+  notify: Restart Jetty
+
+- name: Symlink who.ini
+  file:
+    dest: /etc/ckan/default/who.ini
+    src: "{{ ckan_source_path }}/who.ini"
+    state: link
+  become: yes
