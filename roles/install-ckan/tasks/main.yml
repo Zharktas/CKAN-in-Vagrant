@@ -84,7 +84,7 @@
 
 - name: Symlink schema.xml
   file:
-    dest: /etc/solr/schema.xml
+    dest: /etc/solr/conf/schema.xml
     src: "{{ ckan_source_path }}/ckan/config/solr/schema.xml"
     state: link
     force: yes
