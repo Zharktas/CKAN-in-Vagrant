@@ -3,6 +3,6 @@
 
 [build:vars]
 ckan_source_path = ~/project/ckan
-ckan_site_url = http://localhost
+ckan_site_url = http://localhost:5000
 configure_jetty = False
 configure_redis = True

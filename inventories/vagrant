@@ -3,6 +3,6 @@
 
 [vagrant:vars]
 ckan_source_path = /vagrant
-ckan_site_url = http://192.168.33.
+ckan_site_url = http://192.168.33.10:5000
 configure_jetty = True
 configure_redis = False
