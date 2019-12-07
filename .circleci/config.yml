@@ -29,6 +29,8 @@ jobs:
           command: ansible-playbook -v -i inventories/build playbook.yml
           working_directory: ~/project/ckan/CKAN-in-Vagrant
 
-      - run:
-          name: Run ckan
-          command: /usr/lib/ckan/default/bin/paster serve /etc/ckan/default/development.ini
+      - run: |
+          /usr/lib/ckan/default/bin/paster serve /etc/ckan/default/development.ini &
+          curl --fail localhost:5000
+          curl --fail localhost:8983/solr/
+          exec 3<>/dev/tcp/127.0.0.1/6379 && echo -e "PING\r\n" >&3 && head -c 7 <&3
