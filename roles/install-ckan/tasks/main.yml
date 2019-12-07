@@ -126,7 +126,7 @@
     src: "{{ ckan_source_path }}/ckan/config/solr/schema.xml"
     force: yes
   become: yes
-  notify: Restart jetty
+  notify: Restart Jetty
   when: not configure_jetty
 
 # In windows file system who.ini does not link to config
