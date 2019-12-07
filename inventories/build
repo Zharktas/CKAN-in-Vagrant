@@ -4,3 +4,4 @@
 [build:vars]
 ckan_source_path = ~/project/ckan
 ckan_site_url = http://localhost
+configure_jetty = False

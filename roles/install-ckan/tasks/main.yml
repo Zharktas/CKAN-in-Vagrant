@@ -75,47 +75,56 @@
     option: ckan.site_url
     value: "{{ ckan_site_url }}"
 
-- name: Copy jetty configuration
-  copy:
-    src: "jetty9"
-    dest: /etc/default/jetty9
-  become: yes
-  notify: Restart Jetty
+- block:
+  - name: Copy jetty configuration
+    copy:
+      src: "jetty9"
+      dest: /etc/default/jetty9
+    become: yes
+    notify: Restart Jetty
 
-- name: Symlink schema.xml
-  file:
+  - name: Symlink schema.xml
+    file:
+      dest: /etc/solr/conf/schema.xml
+      src: "{{ ckan_source_path }}/ckan/config/solr/schema.xml"
+      state: link
+      force: yes
+    become: yes
+    notify: Restart Jetty
+
+  - name: Create systemd directory for jetty
+    file:
+      dest: /etc/systemd/system/jetty9.service.d
+      state: directory
+    become: yes
+
+  - name: Copy solr.conf
+    copy:
+      src: "solr.conf"
+      dest: /etc/systemd/system/jetty9.service.d/solr.conf
+    become: yes
+    notify: Restart Jetty
+
+  - name: Reload systemd
+    systemd:
+      daemon-reload: true
+    become: yes
+
+  - name: Copy solr-jetty.xml
+    copy:
+      src: "solr-jetty.xml"
+      dest: /etc/solr/solr-jetty.xml
+    become: yes
+    notify: Restart Jetty
+  when: configure_jetty
+
+- name: Copy schema.xml on build
+  copy:
     dest: /etc/solr/conf/schema.xml
     src: "{{ ckan_source_path }}/ckan/config/solr/schema.xml"
-    state: link
     force: yes
   become: yes
-  notify: Restart Jetty
-
-- name: Create systemd directory for jetty
-  file:
-    dest: /etc/systemd/system/jetty9.service.d
-    state: directory
-  become: yes
-
-- name: Copy solr.conf
-  copy:
-    src: "solr.conf"
-    dest: /etc/systemd/system/jetty9.service.d/solr.conf
-  become: yes
-  notify: Restart Jetty
-
-- name: Reload systemd
-  systemd:
-    daemon-reload: true
-  become: yes
-
-- name: Copy solr-jetty.xml
-  copy:
-    src: "solr-jetty.xml"
-    dest: /etc/solr/solr-jetty.xml
-  become: yes
-  notify: Restart Jetty
-
+  when: not configure_jetty
 
 # In windows file system who.ini does not link to config
 - name: Symlink who.ini
