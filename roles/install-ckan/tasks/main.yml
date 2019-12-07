@@ -138,6 +138,11 @@
   notify: Restart Jetty
   when: not configure_jetty
 
+- name: Copy who.ini in ckan (overrides symlink in reporisitory)
+  copy:
+    src: "{{ ckan_source_path }}/ckan/config/who.ini"
+    dest: "{{ ckan_source_path }}/who.ini"
+
 # In windows file system who.ini does not link to config
 - name: Symlink who.ini
   file:
