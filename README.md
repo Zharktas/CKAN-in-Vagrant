@@ -4,6 +4,8 @@ This is mainly aimed at developing ckan in windows for those who for some reason
 
 These Ansible scripts install ckan within virtual machine while keeping the code base on host machine for development.
 
+Tested with Virtualbox 6.0.14, Vagrant 2.2.6 and Ansible 2.9.2.
+
 ## Usage
 
 ```
