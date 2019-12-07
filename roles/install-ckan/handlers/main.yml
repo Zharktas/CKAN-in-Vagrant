@@ -11,3 +11,9 @@
     name: jetty9
     state: restarted
   become: yes
+  ignore_errors: true
+
+- name: Start Redis
+  service:
+    name: redis-server
+    state: started

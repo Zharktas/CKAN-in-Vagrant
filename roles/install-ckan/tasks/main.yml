@@ -6,7 +6,9 @@
     pkg:
       "{{ apt_requirements }}"
   become: yes
-  notify: Start Postgresql
+  notify:
+    - Start Postgresql
+    - Start Redis
 
 - name: Install local ckan to virtual environment
   pip:
@@ -75,14 +77,14 @@
     option: ckan.site_url
     value: "{{ ckan_site_url }}"
 
-- block:
-  - name: Copy jetty configuration
-    copy:
-      src: "jetty9"
-      dest: /etc/default/jetty9
-    become: yes
-    notify: Restart Jetty
+- name: Copy jetty configuration
+  copy:
+    src: "jetty9"
+    dest: /etc/default/jetty9
+  become: yes
+  notify: Restart Jetty
 
+- block:
   - name: Symlink schema.xml
     file:
       dest: /etc/solr/conf/schema.xml
@@ -124,6 +126,7 @@
     src: "{{ ckan_source_path }}/ckan/config/solr/schema.xml"
     force: yes
   become: yes
+  notify: Restart jetty
   when: not configure_jetty
 
 # In windows file system who.ini does not link to config
