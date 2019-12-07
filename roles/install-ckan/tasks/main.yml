@@ -85,6 +85,13 @@
     option: ckan.site_url
     value: "{{ ckan_site_url }}"
 
+- name: Add solr_url to development.ini
+  ini_file:
+    path: "{{ ckan_source_path }}/CKAN-in-Vagrant/development.ini"
+    section: app:main
+    option: solr_url
+    value: http://127.0.0.1:8983/solr/ckan
+
 - name: Copy jetty configuration
   copy:
     src: "jetty9"
@@ -143,6 +150,14 @@
   become: yes
   notify: Restart Jetty
   when: not configure_jetty
+
+- name: Copy solr core for multicore setup
+  copy:
+    src: /usr/share/solr/
+    dest: /etc/solr/ckan
+    remote_src: yes
+  become: yes
+  notify: Restart Jetty
 
 - name: Copy who.ini in ckan (overrides symlink in reporisitory)
   copy:
