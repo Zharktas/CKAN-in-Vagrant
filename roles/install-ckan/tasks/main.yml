@@ -10,6 +10,14 @@
     - Start Postgresql
     - Start Redis
 
+- name: Copy redis conf
+  copy:
+    src: redis.conf
+    dest: /etc/redis/redis.conf
+  become: yes
+  notify: Start Redis
+  when: configure_redis
+
 - name: Install local ckan to virtual environment
   pip:
     name: "{{ ckan_source_path }}"
