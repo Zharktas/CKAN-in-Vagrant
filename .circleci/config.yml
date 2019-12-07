@@ -31,5 +31,4 @@ jobs:
 
       - run:
           name: Run ckan
-          command: paster serve /etc/ckan/default/development.ini
-          working_directory: /usr/lib/ckan/default/bin
+          command: /usr/lib/ckan/default/bin/paster serve /etc/ckan/default/development.ini
