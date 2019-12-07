@@ -7,7 +7,7 @@ jobs:
     steps:
       - run:
           name: Install required packages
-          command: apt-get update && apt-get -y install git python-pip sudo systemd
+          command: apt-get update && apt-get -y install git python-pip sudo
 
       - run:
           name: Upgrade pip
@@ -28,3 +28,8 @@ jobs:
           name: Run ansible
           command: ansible-playbook -v -i inventories/build playbook.yml
           working_directory: ~/project/ckan/CKAN-in-Vagrant
+
+      - run:
+          name: Run ckan
+          command: paster serve /etc/ckan/default/development.ini
+          working_directory: /usr/lib/ckan/default/bin
