@@ -111,14 +111,15 @@
     systemd:
       daemon-reload: true
     become: yes
-
-  - name: Copy solr-jetty.xml
-    copy:
-      src: "solr-jetty.xml"
-      dest: /etc/solr/solr-jetty.xml
-    become: yes
-    notify: Restart Jetty
   when: configure_jetty
+
+- name: Copy solr-jetty.xml
+  copy:
+    src: "solr-jetty.xml"
+    dest: /etc/solr/solr-jetty.xml
+  become: yes
+  notify: Restart Jetty
+
 
 - name: Copy schema.xml on build
   copy:
