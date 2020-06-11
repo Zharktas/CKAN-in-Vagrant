@@ -4,6 +4,7 @@
 apt_requirements:
   - python-apt
   - python-dev
+  - python3-dev
   - postgresql
   - libpq-dev
   - python-pip
@@ -13,5 +14,6 @@ apt_requirements:
   - openjdk-8-jdk
   - redis-server
   - python-psycopg2
+  - python3-psycopg2
 
 virtual_env: /usr/lib/ckan/default

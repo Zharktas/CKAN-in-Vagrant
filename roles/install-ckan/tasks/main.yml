@@ -25,9 +25,16 @@
     editable: yes
   become: yes
 
+- name: Install recommended setuptools
+  pip:
+    requirements: "{{ ckan_source_path }}/requirement-setuptools.txt"
+    virtualenv: "{{ virtual_env }}"
+  become: yes
+
+
 - name: Install ckan requirements
   pip:
-    requirements: "{{ ckan_source_path }}/requirements-py2.txt"
+    requirements: "{{ ckan_source_path }}/{{ckan_requirements}}"
     virtualenv: "{{ virtual_env }}"
   become: yes
 
@@ -60,7 +67,7 @@
   become_user: postgres
 
 - name: Create config file
-  shell: "{{ virtual_env }}/bin/paster make-config ckan {{ ckan_source_path }}/CKAN-in-Vagrant/development.ini"
+  shell: "{{ virtual_env }}/bin/ckan generate config {{ ckan_source_path }}/CKAN-in-Vagrant/development.ini"
   args:
     creates: "{{ ckan_source_path }}/CKAN-in-Vagrant/development.ini"
 
@@ -173,5 +180,5 @@
   become: yes
 
 - name: Create database tables
-  shell: "{{ virtual_env }}/bin/paster --plugin=ckan db init -c /etc/ckan/default/development.ini"
+  shell: "{{ virtual_env }}/bin/ckan -c /etc/ckan/default/development.ini db init"
   become: yes

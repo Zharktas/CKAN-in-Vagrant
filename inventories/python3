@@ -1,0 +1,10 @@
+[vagrant]
+127.0.0.1  ansible_connection=local ansible_python_interpreter=/usr/bin/python3
+
+[vagrant:vars]
+ckan_source_path = /vagrant
+ckan_site_url = http://192.168.33.10:5000
+configure_jetty = True
+configure_redis = False
+ckan_requirements = requirements.txt
+
